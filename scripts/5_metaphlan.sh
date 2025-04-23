@@ -7,13 +7,19 @@
 #SBATCH --time=2:00:00  		                        # Time limit hrs:min:sec
 #SBATCH --output=/work/binf8165/lml38336/log.%j			# Location of standard output and error log files (replace lml38336 with your myid)
 #SBATCH --mail-user=lml38336@uga.edu                # Where to send mail (replace lml38336 with your myid)
-#SBATCH --mail-type=END,FAIL                        # Mail events (BEGIN, END, FAIL, ALL)
+#SBATCH --mail-type=ALL                             # Mail events (BEGIN, END, FAIL, ALL)
 
 #make input directory file path
 input="/work/binf8165/lml38336/final_proj/trimmed"
 
 #make output directory file path
 output="/work/binf8165/lml38336/final_proj/metaphlan_output"
+
+#if output directory doesn't exist, create it
+if [ ! -d $output ]
+then
+    mkdir -p $output
+fi 
 
 #make metaphlan database file path
 db="/apps/eb/MetaPhlAn/4.1.1-foss-2022a/lib/python3.10/site-packages/metaphlan/metaphlan_databases"
