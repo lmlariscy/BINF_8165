@@ -38,5 +38,5 @@ metaphlan \
   --bowtie2db $db \
   --nproc 8 \
   --bowtie2out $output/$i\_In_bowtie2.bz2 \
-  --output_file $output/$i\_In__profile.txt
+  --output_file $output/$i\_In_profile.txt
 done
