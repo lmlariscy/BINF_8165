@@ -21,13 +21,13 @@ then
     mkdir -p $output
 fi 
 
-#make metaphlan database file path
-db="/apps/eb/MetaPhlAn/4.1.1-foss-2022a/lib/python3.10/site-packages/metaphlan/metaphlan_databases"
-
 cd $SLURM_SUBMIT_DIR
 
 #load required modules
 module load MetaPhlAn/4.1.1-foss-2022a
+
+#load database manually
+wget https://cmprod1.cibio.unitn.it/biobakery4/metaphlan_databases/mpa_vJan21_CHOCOPhlAnSGB_202103.tar -P /work/binf8165/lml38336/final_proj/metaphlan_db
 
 #run metaphlan
 for i in {1,3,5,8,15,24,29,41,50,60}

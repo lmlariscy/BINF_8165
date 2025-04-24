@@ -6,17 +6,27 @@ input="/work/binf8165/lml38336/final_proj/raw_data"
 #make output directory file path for trimmed reads
 output="/work/binf8165/lml38336/final_proj/trimmed"
 
+#make output directory file path for extracted reads
+extracted="/work/binf8165/lml38336/final_proj/trimmed/extracted"
+
 #if output directory doesn't exist, create it
 if [ ! -d $output ]
 then
     mkdir -p $output
 fi 
 
+if [ ! -d $extracted ]
+then
+    mkdir -p $extracted
+fi 
+
+#change directory
 cd $SLURM_SUBMIT_DIR
 
 # Load necessary modules
 module load Java/13.0.2
 module load Trimmomatic
+module load seqtk/1.4-GCC-12.3.0
 
 # ======== CONFIGURATION ========
 ADAPTERS="/work/binf8165/instructor_data/workDir/scripts/adapters.fa"
@@ -40,13 +50,23 @@ java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar \
   MINLEN:$MINLEN
   done
 
+#extract 100,000 reads from each sample
+for i in {1,3,5,8,15,24,29,41,50,60}
+do 
+for x in {1,2}
+do
+seqtk sample -s100 $output/$i\_In_R$x\_paired.fastq.gz 100000 > $extracted/$i\_In_R$x\_paired_100K.fastq.gz
+done
+done
 
-java -jar $EBROOTTRIMMOMATIC/trimmomatic-0.39.jar \
-  PE -threads $THREADS -phred33 \
-  $input/60_In_R1.fastq.gz $input/60_In_R2.fastq.gz \
-  $output/60_In_R1_paired.fastq.gz $output/60_In_R1_unpaired.fastq.gz \
-  $output/60_In_R2_paired.fastq.gz $output/60_In_R2_unpaired.fastq.gz \
-  ILLUMINACLIP:$ADAPTERS:2:30:10 \
-  LEADING:$LEADING_QUAL TRAILING:$TRAILING_QUAL \
-  SLIDINGWINDOW:$SLIDINGWINDOW \
-  MINLEN:$MINLEN
+#make directory for paired files in github repo
+mkdir /work/binf8165/lml38336/final_proj/BINF_8165/fastqs
+
+#copy paired files to github repo
+for i in {1,3,5,8,15,24,29,41,50,60}
+do 
+for x in {1,2}
+do
+cp $extracted/$i\_In_R$x\_paired_100K.fastq.gz /work/binf8165/lml38336/final_proj/BINF_8165/fastqs
+done
+done
