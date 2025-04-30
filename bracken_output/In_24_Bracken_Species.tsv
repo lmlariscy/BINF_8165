@@ -1,0 +1,57 @@
+name	taxonomy_id	taxonomy_lvl	kraken_assigned_reads	added_reads	new_est_reads	fraction_total_reads
+Clostridium botulinum	1491	S	4855	44	4899	0.18062
+Faecalibacterium prausnitzii	853	S	52	17	69	0.00254
+Flavonifractor plautii	292800	S	16	0	16	0.00059
+Lactococcus cremoris	1359	S	14	6	20	0.00074
+Lactococcus lactis	1358	S	10	18	28	0.00103
+Bifidobacterium longum	216816	S	755	719	1474	0.05435
+Bifidobacterium breve	1685	S	200	23	223	0.00822
+Bifidobacterium bifidum	1681	S	79	51	130	0.00479
+Bifidobacterium pseudocatenulatum	28026	S	36	3	39	0.00144
+Bifidobacterium catenulatum	1686	S	20	2	22	0.00081
+Cutibacterium acnes	1747	S	507	36	543	0.02002
+Nocardioides seonyuensis	2518371	S	31	25	56	0.00206
+Kocuria flava	446860	S	160	41	201	0.00741
+Kocuria rosea	1275	S	71	9	80	0.00295
+Kocuria palustris	71999	S	13	2	15	0.00055
+Ornithinimicrobium flavum	1288636	S	16	7	23	0.00085
+Janibacter sp. DB-40	3028808	S	10	5	15	0.00055
+Brachybacterium sp. GU-2	3069708	S	11	10	21	0.00077
+Dermacoccus nishinomiyaensis	1274	S	13	2	15	0.00055
+Streptomyces sp. T12	477697	S	11	115	126	0.00465
+Corynebacterium efficiens	152794	S	12	8	20	0.00074
+Dietzia kunjamensis	322509	S	19	16	35	0.00129
+Collinsella aerofaciens	74426	S	75	4	79	0.00291
+Eggerthella lenta	84112	S	17	1	18	0.00066
+Escherichia coli	562	S	30	2537	2567	0.09464
+Pantoea agglomerans	549	S	15	3	18	0.00066
+Pantoea dispersa	59814	S	12	0	12	0.00044
+Mixta hanseatica	2872648	S	13	2	15	0.00055
+Stutzerimonas stutzeri	316	S	10	6	16	0.00059
+Vibrio furnissii	29494	S	133	8	141	0.00520
+Acinetobacter schindleri	108981	S	13	15	28	0.00103
+Acinetobacter indicus	756892	S	11	8	19	0.00070
+Moraxella osloensis	34062	S	13	3	16	0.00059
+Cellvibrio sp. KY-GH-1	2303332	S	21	4	25	0.00092
+Paracoccus sp. Arc7-R13	2500532	S	13	19	32	0.00118
+Paracoccus marcusii	59779	S	15	16	31	0.00114
+Asticcacaulis excentricus	78587	S	14	2	16	0.00059
+Burkholderia pseudomallei	28450	S	14	25	39	0.00144
+Sutterella wadsworthensis	40545	S	11	1	12	0.00044
+Bacteroides fragilis	817	S	13	312	325	0.01198
+Segatella copri	165179	S	21	2	23	0.00085
+Turneriella parva	29510	S	14	0	14	0.00052
+Homo sapiens	9606	S	7152	1289	8441	0.31121
+Purpureocillium takamizusanense	2060973	S	13	14	27	0.00100
+Colletotrichum higginsianum	80884	S	11	18	29	0.00107
+Thermothielavioides terrestris	2587410	S	13	3	16	0.00059
+Thermothelomyces thermophilus	78579	S	12	1	13	0.00048
+Neurospora crassa	5141	S	18	2	20	0.00074
+Aspergillus luchuensis	1069201	S	53	9	62	0.00229
+Aspergillus fumigatus	746128	S	14	1	15	0.00055
+Ascochyta rabiei	5454	S	11	1	12	0.00044
+Malassezia restricta	76775	S	71	14	85	0.00313
+Babesia bigemina	5866	S	5033	421	5454	0.20108
+Leishmania mexicana	5665	S	14	0	14	0.00052
+Varicellovirus bovinealpha1	3050243	S	1280	96	1376	0.05073
+Varicellovirus bubalinealpha1	3050249	S	14	4	18	0.00066

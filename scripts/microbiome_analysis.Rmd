@@ -1,0 +1,298 @@
+---
+title: "taxonomy"
+author: "Leah Lariscy"
+date: "2025-04-24"
+output: html_document
+---
+
+# Load packages
+
+```{r}
+library(tidyverse)
+library(here)
+library(phyloseq)
+library(vegan)
+library(corncob)
+```
+
+# Load data
+
+```{r}
+#make bracken files list
+bracken_files <- list.files(path = here("bracken_output/"), pattern = "Bracken_Species", full.names = TRUE)
+
+#read in files
+bracken_list <- lapply(bracken_files, read.table, sep = "\t", header = TRUE)
+
+#rename objects in list
+names(bracken_list) <- gsub("^(In_\\d+)_.*", "\\1", 
+                            basename(bracken_files))
+  
+# Make a big table
+bracken_df <- bracken_list %>%
+  bind_rows(.id = "SampleID") %>% 
+  filter(name != 'Homo sapiens')
+
+#read in metadata
+monsoon_levels <- c("before","after") #create levels
+
+meta <- read.csv(here("metadata/india_metadata.csv"), row.names = 1) %>% 
+  select(!sample) %>% 
+  mutate(monsoon = factor(monsoon, levels = monsoon_levels))
+meta <- sample_data(meta)
+```
+
+## Wrangle data
+
+```{r}
+#select sample ID, taxa, and estimated reads
+bracken_est_reads <- bracken_df %>% 
+  select(SampleID, name, new_est_reads) %>% 
+  pivot_wider(names_from = SampleID, values_from = new_est_reads) %>% 
+  mutate(across(2:11, ~as.numeric(replace_na(.x, 0))))
+```
+
+# Phyloseq
+
+## Create objects
+
+```{r}
+#make sure taxa are rownames
+feature_table <- as.data.frame(bracken_est_reads)
+rownames(feature_table) <- feature_table$name
+feature_table$name <- NULL
+
+# Make otu_table
+otu <- otu_table(as.matrix(feature_table), taxa_are_rows = TRUE)
+
+# Make taxonomy table
+taxonomy <- data.frame(
+  Genus = sapply(strsplit(rownames(feature_table), " "), `[`, 1),
+  Species = sapply(rownames(feature_table), function(x) {
+    parts <- strsplit(x, " ")[[1]]
+    if (length(parts) >= 3 && parts[2] == "sp.") {
+      return(parts[3])  # Take the third part if second part is 'sp.'
+    } else if (length(parts) >= 2) {
+      return(parts[2])  # Normally take the second part
+    } else {
+      return(NA)  # If weird formatting
+    }
+  })
+)
+rownames(taxonomy) <- rownames(feature_table)
+taxonomy <- tax_table(as.matrix(taxonomy))
+
+
+#assemble
+ps <- phyloseq(otu,taxonomy,meta)
+```
+
+## Alpha diversity
+
+```{r}
+#calculate diversity measures
+alpha_df <- estimate_richness(ps, measures = c("Shannon", "Simpson", "Observed"))
+alpha_df$SampleID <- rownames(alpha_df)
+
+# Merge with sample metadata
+alpha_df <- cbind(alpha_df, as(sample_data(ps), "data.frame"))
+
+```
+
+```{r}
+#plot shannon alpha diversity
+
+alpha_df %>% ggplot(aes(x = monsoon, y = Shannon, color = monsoon)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "Shannon Diversity", y = "Shannon Index", x = "Sample") +
+  ggthemes::theme_clean()
+
+ggsave(here("figures/shannon_alpha_diversity.tiff"))
+```
+
+```{r}
+#plot simpson alpha diversity
+alpha_df %>% ggplot(aes(x = monsoon, y = Simpson, color = monsoon)) +
+  geom_boxplot() +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  theme_minimal() +
+  labs(title = "Simpson Diversity", y = "Simpson Index", x = "Sample") +
+  ggthemes::theme_clean()
+
+ggsave(here("figures/simpson_alpha_diversity.tiff"))
+```
+
+## Beta diversity
+
+```{r}
+# Calculate Bray-Curtis dissimilarity
+ord_bc <- ordinate(ps, method = "PCoA", distance = "bray")
+
+```
+
+```{r}
+#plot ordination
+plot_ordination(ps, ord_bc, color = "monsoon") +
+  geom_point(size = 3) +
+  theme_minimal() +
+  labs(title = "PCoA (Bray-Curtis)") +
+  ggthemes::theme_clean()
+
+ggsave(here("figures/pcoa_bray-curtis.tiff"))
+```
+
+```{r}
+#see if distances are significant
+
+# Extract Bray-Curtis distance matrix
+bc_dist <- phyloseq::distance(ps, method = "bray")
+metadata <- as(sample_data(ps), "data.frame")
+
+adonis2(bc_dist ~ monsoon, data = metadata)
+
+```
+
+```{r}
+# Step 2: Extract sample coordinates
+ord_df <- plot_ordination(ps, ord_bc, justDF = TRUE)
+
+# Step 3: Merge with metadata (optional, if not already in ord_df)
+metadata <- as(sample_data(ps), "data.frame")
+ord_df_full <- cbind(ord_df, metadata[rownames(ord_df), ])
+
+# Step 4: Run envfit using only the ordination coordinates
+# IMPORTANT: Only the coordinate columns (usually the first 2 columns)
+ordination_coords <- ord_df[, 1:2]
+colnames(ordination_coords) <- c("Axis.1", "Axis.2")  # ensure clean names
+
+envfit_result <- envfit(ordination_coords, metadata, permutations = 999)
+```
+
+```{r}
+# Extract arrow data from envfit
+factor_scores <- scores(envfit_result, display = "factors")
+centroids_df <- as.data.frame(factor_scores) %>% tail(2)
+```
+
+```{r}
+ggplot(ord_df, aes(x = Axis.1, y = Axis.2, color = monsoon)) +
+  geom_point(size = 3, alpha = 0.7) +
+  geom_point(data = centroids_df, aes(x = Axis.1, y = Axis.2), 
+             shape = 4, size = 5, stroke = 2, color = "black") +
+  geom_text(data = centroids_df, aes(x = Axis.1, y = Axis.2, 
+                                     label = rownames(centroids_df)),
+            vjust = -1, color = "black", fontface = "bold") +
+  theme_minimal() +
+  labs(title = "PCoA (Bray-Curtis) with Group Centroids",
+       x = "PCoA Axis 1", y = "PCoA Axis 2") +
+  ggthemes::theme_clean()
+
+ggsave(here("figures/pcoa_centroids.tiff"))
+```
+
+## Differential abundance
+
+```{r}
+#differentially abundant taxa
+ps_genus <- ps %>% tax_glom("Genus")
+ps_species <- ps %>% tax_glom("Species")
+
+set.seed(1)
+da_analysis <- differentialTest(formula = ~ monsoon,
+                                 phi.formula = ~ monsoon,
+                                 formula_null = ~ 1,
+                                 phi.formula_null = ~ monsoon,
+                                 test = "Wald", boot = FALSE,
+                                 data = ps_species,
+                                 fdr_cutoff = 0)
+
+da_analysis$significant_taxa 
+```
+
+```{r}
+#differentially variable taxa
+set.seed(1)
+dv_analysis <- differentialTest(formula = ~ monsoon,
+                                 phi.formula = ~ monsoon,
+                                 formula_null = ~ monsoon,
+                                 phi.formula_null = ~ 1,
+                                 data = ps_species,
+                                 test = "LRT", boot = FALSE,
+                                 fdr_cutoff = 0)
+
+dv_analysis$significant_taxa
+
+```
+
+# Visualize abundances
+
+```{r}
+physeq_genus <- tax_glom(ps, taxrank = "Genus")
+physeq_genus_rel <- transform_sample_counts(physeq_genus, 
+                                            function(x) x / sum(x))
+
+plot_bar(physeq_genus_rel, fill = "Genus") +
+  theme_minimal() +
+  ylab("Relative Abundance") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "none")
+
+```
+
+```{r}
+bracken_df %>% 
+  mutate(Genus = str_extract(name, "^\\S+"),
+         SampleID = as.factor(SampleID)) %>% 
+  ggplot(aes(SampleID,fraction_total_reads,fill = Genus)) +
+  geom_col(stat = 'identity', position = 'fill') +
+  ggthemes::theme_clean() +
+  theme(legend.position = "none") +
+  ylab("Genus Relative Abundance") +
+  xlab("Sample")
+
+ggsave(here("figures/genus_relative_abundance.tiff"))
+```
+
+```{r}
+bracken_df %>% mutate(SampleID = as.numeric(SampleID)) %>% 
+arrange(SampleID) %>% 
+  mutate(Genus = str_extract(name, "^\\S+"),
+         SampleID = as.factor(SampleID)) %>% 
+  ggplot(aes(SampleID,fraction_total_reads,fill = Genus)) +
+  geom_col(stat = 'identity')
+```
+
+```{r}
+bracken_df %>% 
+  arrange(desc(fraction_total_reads)) %>% 
+  head(100) %>% 
+  mutate(Genus = str_extract(name, "^\\S+"),
+         SampleID = as.factor(SampleID)) %>% 
+  ggplot(aes(SampleID,fraction_total_reads,fill = Genus)) +
+  geom_col(stat = 'identity', position = 'fill') +
+  ggthemes::theme_clean() +
+  #theme(legend.position = "none") +
+  ylab("Genus Relative Abundance") +
+  xlab("Sample")
+
+ggsave(here("figures/genus_relative_abundance_top.tiff"))
+```
+
+```{r}
+bracken_df %>% 
+  arrange(desc(fraction_total_reads)) %>% 
+  head(100) %>% 
+  mutate(Genus = str_extract(name, "^\\S+"),
+         SampleID = as.factor(SampleID)) %>% 
+  ggplot(aes(SampleID,fraction_total_reads,fill = name)) +
+  geom_col(stat = 'identity', position = 'fill') +
+  ggthemes::theme_clean() +
+  #theme(legend.position = "none") +
+  ylab("Genus Relative Abundance") +
+  xlab("Sample")
+
+ggsave(here("figures/species_relative_abundance_top.tiff"),
+       height = 5, width = 12)
+```

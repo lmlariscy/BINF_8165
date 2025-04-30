@@ -1,0 +1,11 @@
+name	taxonomy_id	taxonomy_lvl	kraken_assigned_reads	added_reads	new_est_reads	fraction_total_reads
+Homo sapiens	9606	S	11438	2223	13661	0.43134
+Babesia bigemina	5866	S	8574	776	9350	0.29522
+Clostridium botulinum	1491	S	6838	739	7577	0.23924
+Micrococcus luteus	1270	S	19	44	63	0.00199
+Ornithinimicrobium flavum	1288636	S	23	8	31	0.00098
+Tessaracoccus flavus	1610493	S	38	22	60	0.00189
+Vibrio furnissii	29494	S	315	165	480	0.01516
+Acinetobacter indicus	756892	S	16	26	42	0.00133
+Cloacibacterium caeni	2004710	S	18	12	30	0.00095
+Varicellovirus bovinealpha1	3050243	S	358	15	373	0.01178

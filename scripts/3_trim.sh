@@ -55,7 +55,7 @@ for i in {1,3,5,8,15,24,29,41,50,60}
 do 
 for x in {1,2}
 do
-seqtk sample -s100 $output/$i\_In_R$x\_paired.fastq.gz 100000 > $extracted/$i\_In_R$x\_paired_100K.fastq.gz
+seqtk sample -s100 $output/$i\_In_R$x\_paired.fastq.gz 100000 > $extracted/$i\_In_R$x\_paired_100K.fastq
 done
 done
 
@@ -67,6 +67,6 @@ for i in {1,3,5,8,15,24,29,41,50,60}
 do 
 for x in {1,2}
 do
-cp $extracted/$i\_In_R$x\_paired_100K.fastq.gz /work/binf8165/lml38336/final_proj/BINF_8165/fastqs
+cp $extracted/$i\_In_R$x\_paired_100K.fastq /work/binf8165/lml38336/final_proj/BINF_8165/fastqs
 done
 done

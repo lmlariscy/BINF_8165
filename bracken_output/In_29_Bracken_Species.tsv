@@ -1,0 +1,95 @@
+name	taxonomy_id	taxonomy_lvl	kraken_assigned_reads	added_reads	new_est_reads	fraction_total_reads
+Homo sapiens	9606	S	9188	2405	11593	0.46006
+Aspergillus oryzae	5062	S	22	45	67	0.00266
+Aspergillus flavus	5059	S	18	47	65	0.00258
+Aspergillus chevalieri	182096	S	55	12	67	0.00266
+Aspergillus luchuensis	1069201	S	34	4	38	0.00151
+Aspergillus puulaauensis	1220207	S	23	2	25	0.00099
+Thermothielavioides terrestris	2587410	S	11	2	13	0.00052
+Psilocybe cubensis	181762	S	25	10	35	0.00139
+Marasmius oreades	181124	S	22	13	35	0.00139
+Rhizoctonia solani	456999	S	10	3	13	0.00052
+Malassezia restricta	76775	S	11	5	16	0.00063
+Babesia bigemina	5866	S	3985	486	4471	0.17743
+Clostridium botulinum	1491	S	3604	182	3786	0.15024
+Faecalibacterium prausnitzii	853	S	10	6	16	0.00063
+Staphylococcus hominis	1290	S	37	24	61	0.00242
+Staphylococcus aureus	1280	S	23	68	91	0.00361
+Staphylococcus epidermidis	1282	S	10	5	15	0.00060
+Exiguobacterium mexicanum	340146	S	31	13	44	0.00175
+Exiguobacterium aurantiacum	33987	S	12	7	19	0.00075
+Streptococcus infantis	68892	S	18	15	33	0.00131
+Streptococcus parasuis	1501662	S	17	19	36	0.00143
+Streptococcus salivarius	1304	S	11	18	29	0.00115
+Lactococcus cremoris	1359	S	41	32	73	0.00290
+Weissella confusa	1583	S	14	7	21	0.00083
+Aerococcus urinaeequi	51665	S	15	9	24	0.00095
+Kocuria flava	446860	S	193	70	263	0.01044
+Kocuria rosea	1275	S	70	13	83	0.00329
+Kocuria sp. KD4	2719588	S	35	31	66	0.00262
+Kocuria palustris	71999	S	30	10	40	0.00159
+Kocuria turfanensis	388357	S	19	4	23	0.00091
+Kocuria indica	1049583	S	14	17	31	0.00123
+Kocuria rhizophila	72000	S	10	10	20	0.00079
+Micrococcus luteus	1270	S	40	112	152	0.00603
+Micrococcus porci	2856555	S	30	19	49	0.00194
+Micrococcus terreus	574650	S	17	5	22	0.00087
+Micrococcus lylae	1273	S	12	3	15	0.00060
+Arthrobacter sp. YC-RL1	1652545	S	13	11	24	0.00095
+Ornithinimicrobium flavum	1288636	S	31	9	40	0.00159
+Ornithinimicrobium sp. HY006	2508882	S	27	7	34	0.00135
+Ornithinimicrobium avium	2283195	S	13	2	15	0.00060
+Serinicoccus profundi	1078471	S	12	5	17	0.00067
+Brachybacterium sp. GU-2	3069708	S	20	27	47	0.00187
+Cellulomonas sp. ATA003	3073064	S	10	8	18	0.00071
+Corynebacterium efficiens	152794	S	44	4	48	0.00190
+Corynebacterium amycolatum	43765	S	28	57	85	0.00337
+Corynebacterium maris	575200	S	23	2	25	0.00099
+Corynebacterium aurimucosum	169292	S	21	4	25	0.00099
+Corynebacterium xerosis	1725	S	19	7	26	0.00103
+Corynebacterium stationis	1705	S	16	1	17	0.00067
+Corynebacterium tuberculostearicum	38304	S	16	6	22	0.00087
+Dietzia kunjamensis	322509	S	35	25	60	0.00238
+Dietzia sp. oral taxon 368	712270	S	24	14	38	0.00151
+Dietzia lutea	546160	S	19	5	24	0.00095
+Cutibacterium acnes	1747	S	139	24	163	0.00647
+Tessaracoccus flavus	1610493	S	29	14	43	0.00171
+Propioniciclava sp. MC1595	2760308	S	17	7	24	0.00095
+Microlunatus sagamiharensis	546874	S	11	2	13	0.00052
+Nocardioides daphniae	402297	S	10	25	35	0.00139
+Streptomyces harbinensis	1176198	S	33	74	107	0.00425
+Bifidobacterium longum	216816	S	73	135	208	0.00825
+Bifidobacterium breve	1685	S	16	3	19	0.00075
+Collinsella aerofaciens	74426	S	14	2	16	0.00063
+Deinococcus sp. NW-56	2080419	S	94	7	101	0.00401
+Deinococcus ficus	317577	S	21	0	21	0.00083
+Deinococcus wulumuqiensis	980427	S	10	2	12	0.00048
+Acinetobacter indicus	756892	S	125	93	218	0.00865
+Acinetobacter schindleri	108981	S	60	49	109	0.00433
+Acinetobacter variabilis	70346	S	34	63	97	0.00385
+Acinetobacter johnsonii	40214	S	24	26	50	0.00198
+Acinetobacter baumannii	470	S	12	79	91	0.00361
+Acinetobacter haemolyticus	29430	S	19	9	28	0.00111
+Acinetobacter towneri	202956	S	13	34	47	0.00187
+Psychrobacter sanguinis	861445	S	155	27	182	0.00722
+Psychrobacter sp. van23A	3064892	S	21	19	40	0.00159
+Moraxella osloensis	34062	S	70	29	99	0.00393
+Pseudomonas putida	303	S	11	87	98	0.00389
+Stutzerimonas stutzeri	316	S	56	50	106	0.00421
+Vibrio furnissii	29494	S	112	32	144	0.00571
+Cellvibrio sp. KY-GH-1	2303332	S	14	0	14	0.00056
+Paracoccus sp. MC1862	2760307	S	33	4	37	0.00147
+Paracoccus sp. AK26	2589076	S	29	10	39	0.00155
+Paracoccus sp. M09	3064531	S	15	6	21	0.00083
+Paracoccus marcusii	59779	S	32	23	55	0.00218
+Paracoccus yeei	147645	S	10	21	31	0.00123
+Comamonas aquatica	225991	S	17	51	68	0.00270
+Massilia varians	457921	S	12	18	30	0.00119
+Burkholderia pseudomallei	28450	S	10	10	20	0.00079
+Chryseobacterium sp.	1871047	S	13	10	23	0.00091
+Cloacibacterium caeni	2004710	S	21	7	28	0.00111
+Cloacibacterium normanense	237258	S	11	4	15	0.00060
+Segatella copri	165179	S	33	12	45	0.00179
+Pseudocnuella soli	2502779	S	12	0	12	0.00048
+Turneriella parva	29510	S	12	0	12	0.00048
+Varicellovirus bovinealpha1	3050243	S	567	54	621	0.02464
