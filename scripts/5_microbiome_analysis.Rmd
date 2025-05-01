@@ -50,6 +50,17 @@ bracken_est_reads <- bracken_df %>%
   select(SampleID, name, new_est_reads) %>% 
   pivot_wider(names_from = SampleID, values_from = new_est_reads) %>% 
   mutate(across(2:11, ~as.numeric(replace_na(.x, 0))))
+
+#select sample ID, taxa, and relative abundances
+bracken_rel_abundance <- bracken_df %>% 
+  select(SampleID, name, fraction_total_reads) %>% 
+  pivot_wider(names_from = SampleID, 
+              values_from = fraction_total_reads) %>% 
+  mutate(across(2:11, ~as.numeric(replace_na(.x, 0))))
+
+write_tsv(bracken_rel_abundance, 
+          here("bracken_output/combined_data/
+               species_relative_abundances.tsv"))
 ```
 
 # Phyloseq
@@ -296,4 +307,17 @@ bracken_df %>%
 
 ggsave(here("figures/species_relative_abundance_top.tiff"),
        height = 5, width = 12)
+```
+
+```{r}
+bracken_df %>% group_by(name) %>% 
+  summarize(total_reads = sum(new_est_reads)) %>% 
+  arrange(desc(total_reads)) %>% 
+  head(20)
+```
+
+```{r}
+bracken_df %>% 
+  mutate(Genus = str_extract(name, "^\\S+")) %>% 
+  count(Genus)
 ```
